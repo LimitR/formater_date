@@ -7,7 +7,11 @@ class DATEFORMATER {
         case 'lastDay':
             this.date = new Date(Date.now() - 86400000 * day)
         break
-        }
+        
+        case 'time':
+            this.date = new Date(Date.now() - 3600000 * day)
+        break
+    }
     }
     formatNumber(string, lastDay = 0){
         var nullForDay = ""
@@ -88,6 +92,33 @@ class DATEFORMATER {
                 }
                 return `${nullForMonth}${this.date.getMonth()+1}${del}${nullForDay}${this.date.getDate()}${del}${this.date.getFullYear()}`
             break
+        }
+    }
+    formatTime(string, lastHour = 0, del = ''){
+        var nullForHours = ""
+        var nullForMinutes = ""
+        var nullForSeconds = ""
+        var nullForMilliseconds = ""
+        this.date = new Date(Date.now() - 3600000 * lastHour)
+        if(this.date.getHours() < 10){
+            nullForHours = 0
+        }
+        if(this.date.getMinutes() < 10){
+            nullForMinutes = 0
+        }
+        if(this.date.getSeconds() < 10){
+            nullForSeconds = 0
+        }
+        if(this.date.getMilliseconds() < 10){
+            nullForMilliseconds = 0
+        }
+        switch(string){
+            case 'HHMMSS':
+                return `${nullForHours}${this.date.getHours()}${del}${nullForMinutes}${this.date.getMinutes()}${del}${nullForSeconds}${this.date.getSeconds()}`
+        }
+        switch(string){
+            case 'HHMMSSMsMs':
+                return `${nullForHours}${this.date.getHours()}${del}${nullForMinutes}${this.date.getMinutes()}${del}${nullForSeconds}${this.date.getSeconds()}${del}${nullForMilliseconds}${this.date.getMilliseconds()}`
         }
     }
 }
