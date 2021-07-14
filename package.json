@@ -1,0 +1,22 @@
+{
+  "name": "formaterdate",
+  "version": "1.0.0",
+  "description": "Чтоб в чате больше не выебывались",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LimitR/formater_date.git"
+  },
+  "keywords": [
+    "date"
+  ],
+  "author": "Artem LimitR",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LimitR/formater_date/issues"
+  },
+  "homepage": "https://github.com/LimitR/formater_date#readme"
+}
