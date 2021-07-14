@@ -14,19 +14,19 @@ class DATEFORMATER {
         var nullForMonth = ""
         this.date = new Date(Date.now() - 86400000 * lastDay)
         switch(string){
-            case 'ru':
+            case 'DDMMYY':
                 if(this.date.getMonth() < 10){
                     nullForMonth = 0
                 }
                 return +`${nullForDay}${this.date.getDate()}${nullForMonth}${this.date.getMonth()+1}${this.date.getFullYear().toString().slice(2)}`
             break
-            case 'usa':
+            case 'MMDDYY':
                 if(this.date.getDate() < 10){
                     nullForDay = 0
                 }
                 return +`${nullForMonth}${this.date.getMonth()+1}${nullForDay}${this.date.getDate()}${this.date.getFullYear().toString().slice(2)}`
             break
-            case 'fullYear_ru':
+            case 'DDMMYYYY':
                 if(this.date.getDate() < 10){
                     nullForDay = 0
                 }
@@ -35,7 +35,7 @@ class DATEFORMATER {
                 }
                 return +`${nullForDay}${this.date.getDate()}${nullForMonth}${this.date.getMonth()+1}${this.date.getFullYear()}`
             break
-            case 'fullYear_usa':
+            case 'MMDDYYYY':
                 if(this.date.getDate() < 10){
                     nullForDay = 0
                 }
@@ -52,7 +52,7 @@ class DATEFORMATER {
         var nullForDay = ""
         var nullForMonth = ""
         switch(string){
-            case 'ru':
+            case 'DDMMYY':
                 if(this.date.getDate() < 10){
                     nullForDay = 0
                 }
@@ -61,7 +61,7 @@ class DATEFORMATER {
                 }
                 return `${nullForDay}${this.date.getDate()}${del}${nullForMonth}${this.date.getMonth()+1}${del}${this.date.getFullYear().toString().slice(2)}`
             break
-            case 'usa':
+            case 'MMDDYY':
                 if(this.date.getDate() < 10){
                     nullForDay = 0
                 }
@@ -70,7 +70,7 @@ class DATEFORMATER {
                 }
                 return `${nullForMonth}${this.date.getMonth()+1}${del}${nullForDay}${this.date.getDate()}${del}${this.date.getFullYear().toString().slice(2)}`
             break
-            case 'fullYear_ru':
+            case 'DDMMYYYY':
                 if(this.date.getDate() < 10){
                     nullForDay = 0
                 }
@@ -79,7 +79,7 @@ class DATEFORMATER {
                 }
                 return `${nullForDay}${this.date.getDate()}${del}${nullForMonth}${this.date.getMonth()+1}${del}${this.date.getFullYear()}`
             break
-            case 'fullYear_usa':
+            case 'MMDDYYYY':
                 if(this.date.getDate() < 10){
                     nullForDay = 0
                 }
