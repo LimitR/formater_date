@@ -117,6 +117,10 @@ class DATEFORMATER {
                 return `${nullForHours}${this.date.getHours()}${del}${nullForMinutes}${this.date.getMinutes()}${del}${nullForSeconds}${this.date.getSeconds()}`
         }
         switch(string){
+            case 'HHMM':
+                return `${nullForHours}${this.date.getHours()}${del}${nullForMinutes}${this.date.getMinutes()}`
+        }
+        switch(string){
             case 'HHMMSSMsMs':
                 return `${nullForHours}${this.date.getHours()}${del}${nullForMinutes}${this.date.getMinutes()}${del}${nullForSeconds}${this.date.getSeconds()}${del}${nullForMilliseconds}${this.date.getMilliseconds()}`
         }
@@ -124,3 +128,4 @@ class DATEFORMATER {
 }
 
 module.exports = DATEFORMATER
+
