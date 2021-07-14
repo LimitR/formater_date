@@ -19,13 +19,31 @@ class DATEFORMATER {
                     nullForMonth = 0
                 }
                 return +`${nullForDay}${this.date.getDate()}${nullForMonth}${this.date.getMonth()+1}${this.date.getFullYear().toString().slice(2)}`
-                break
+            break
             case 'usa':
                 if(this.date.getDate() < 10){
                     nullForDay = 0
                 }
                 return +`${nullForMonth}${this.date.getMonth()+1}${nullForDay}${this.date.getDate()}${this.date.getFullYear().toString().slice(2)}`
-                break
+            break
+            case 'fullYear_ru':
+                if(this.date.getDate() < 10){
+                    nullForDay = 0
+                }
+                if(this.date.getMonth() < 10){
+                    nullForMonth = 0
+                }
+                return +`${nullForDay}${this.date.getDate()}${nullForMonth}${this.date.getMonth()+1}${this.date.getFullYear()}`
+            break
+            case 'fullYear_usa':
+                if(this.date.getDate() < 10){
+                    nullForDay = 0
+                }
+                if(this.date.getMonth() < 10){
+                    nullForMonth = 0
+                }
+                return +`${nullForMonth}${this.date.getMonth()+1}${del}${nullForDay}${this.date.getDate()}${del}${this.date.getFullYear()}`
+            break
         }
 
     }
@@ -42,7 +60,7 @@ class DATEFORMATER {
                     nullForMonth = 0
                 }
                 return `${nullForDay}${this.date.getDate()}${del}${nullForMonth}${this.date.getMonth()+1}${del}${this.date.getFullYear().toString().slice(2)}`
-                break
+            break
             case 'usa':
                 if(this.date.getDate() < 10){
                     nullForDay = 0
@@ -51,7 +69,25 @@ class DATEFORMATER {
                     nullForMonth = 0
                 }
                 return `${nullForMonth}${this.date.getMonth()+1}${del}${nullForDay}${this.date.getDate()}${del}${this.date.getFullYear().toString().slice(2)}`
-                break
+            break
+            case 'fullYear_ru':
+                if(this.date.getDate() < 10){
+                    nullForDay = 0
+                }
+                if(this.date.getMonth() < 10){
+                    nullForMonth = 0
+                }
+                return `${nullForDay}${this.date.getDate()}${del}${nullForMonth}${this.date.getMonth()+1}${del}${this.date.getFullYear()}`
+            break
+            case 'fullYear_usa':
+                if(this.date.getDate() < 10){
+                    nullForDay = 0
+                }
+                if(this.date.getMonth() < 10){
+                    nullForMonth = 0
+                }
+                return `${nullForMonth}${this.date.getMonth()+1}${del}${nullForDay}${this.date.getDate()}${del}${this.date.getFullYear()}`
+            break
         }
     }
 }
