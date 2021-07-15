@@ -14,12 +14,15 @@ class DATEFORMATER {
         case 'myValue':
             this.date = date
         break
+        case undefined:
+            this.date = null
+        break
     }
     }
     formatNumber(string, lastDay = 0){
         var nullForDay = ""
         var nullForMonth = ""
-        this.date = new Date(Date.now() - 86400000 * lastDay)
+        this.date = new Date(Date.now() - 86400000 * (-lastDay))
         switch(string){
             case 'DDMMYY':
                 if(this.date.getMonth() < 10){
@@ -55,7 +58,7 @@ class DATEFORMATER {
 
     }
     formatString(string, lastDay = 0, del = ''){
-        this.date = new Date(Date.now() - 86400000 * lastDay)
+        this.date = new Date(Date.now() - 86400000 * (-lastDay))
         var nullForDay = ""
         var nullForMonth = ""
         switch(string){
@@ -102,7 +105,7 @@ class DATEFORMATER {
         var nullForMinutes = ""
         var nullForSeconds = ""
         var nullForMilliseconds = ""
-        this.date = new Date(Date.now() - 3600000 * lastHour)
+        this.date = new Date(Date.now() - 3600000 * (-lastHour))
         if(this.date.getHours() < 10){
             nullForHours = 0
         }
