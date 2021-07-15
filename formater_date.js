@@ -176,6 +176,38 @@ class DATEFORMATER {
         }
     }
 
+    formatParse(string){
+        let y = new Date()
+        let yearsForUser
+        //Вывод из произвольной даты читаемую в нужном формате (от стандартной, до миллисекунд)
+        let rTime = /0[0-9]{1}[:]0[0-9]{1}|[0-9]{2}[:][0-9]{2}/
+        let rDate = /0[0-9]{1}[.]0[0-9]{1}[.]0[0-9]{1}|[0-9]{2}[.][0-9]{2}[.][0-9]{2}|0[0-9]{1}[,]0[0-9]{1}[,]0[0-9]{1}|[0-9]{2}[,][0-9]{2}[,][0-9]{2}/
+        var rDays = /понедельник|вторник|среда|четверг|пятница|суббота|воскресенье/
+        let mouth = [31,28,31,30,31,30,31,31,30,31,30,31]
+        if(rDays.test(string)){
+            return 'Смотришь день недели'
+        }
+        if(rTime.test(string)){
+            return 'Смотришь время'
+        }
+
+
+        if(rDate.test(string)){
+            let dayFotMouth = 0
+            let _string = string.split('.'||',')
+            for (let i =0; i < _string[1];i++){
+            dayFotMouth = dayFotMouth + mouth[i]
+            }
+           let p = (dayFotMouth - _string[0]) * 86400000
+
+           if(+_string[2] == +y.getFullYear().toString().slice(2)){
+            _string[2] = +_string[2] + 2000
+             yearsForUser = (_string[2] - 1970) * 31536000000
+           }
+            return yearsForUser + p
+        }
+    }
+
 }
 
 module.exports = DATEFORMATER
