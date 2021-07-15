@@ -11,7 +11,7 @@ class DATEFORMATER {
         case 'time':
             this.date = new Date(Date.now() - 3600000 * day)
         break
-    }
+        }
     }
     formatNumber(string, lastDay = 0){
         var nullForDay = ""
