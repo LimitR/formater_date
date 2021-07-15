@@ -9,7 +9,7 @@
 **const DATE = require('./formater_date')**
 
 Потом создаем новый экземпляр класса
-**let x = new DATE('now')**
+`let x = new DATE('now')`
 
 Как пользоваться? 
 
