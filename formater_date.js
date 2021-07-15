@@ -11,6 +11,9 @@ class DATEFORMATER {
         case 'time':
             this.date = new Date(Date.now() - 3600000 * day)
         break
+        case 'myValue':
+            this.date = date
+        break
     }
     }
     formatNumber(string, lastDay = 0){
@@ -125,6 +128,51 @@ class DATEFORMATER {
                 return `${nullForHours}${this.date.getHours()}${del}${nullForMinutes}${this.date.getMinutes()}${del}${nullForSeconds}${this.date.getSeconds()}${del}${nullForMilliseconds}${this.date.getMilliseconds()}`
         }
     }
+
+    formatMillis(string, lastDay, del = ''){
+        let date = new Date(lastDay)
+        var nullForDay = ""
+        var nullForMonth = ""
+        switch(string){
+            case 'DDMMYY':
+                if(date.getDate() < 10){
+                    nullForDay = 0
+                }
+                if(date.getMonth() < 10){
+                    nullForMonth = 0
+                }
+                return `${nullForDay}${date.getDate()}${del}${nullForMonth}${date.getMonth()+1}${del}${date.getFullYear().toString().slice(2)}`
+            break
+            case 'MMDDYY':
+                if(date.getDate() < 10){
+                    nullForDay = 0
+                }
+                if(date.getMonth() < 10){
+                    nullForMonth = 0
+                }
+                return `${nullForMonth}${date.getMonth()+1}${del}${nullForDay}${date.getDate()}${del}${date.getFullYear().toString().slice(2)}`
+            break
+            case 'DDMMYYYY':
+                if(date.getDate() < 10){
+                    nullForDay = 0
+                }
+                if(date.getMonth() < 10){
+                    nullForMonth = 0
+                }
+                return `${nullForDay}${date.getDate()}${del}${nullForMonth}${date.getMonth()+1}${del}${date.getFullYear()}`
+            break
+            case 'MMDDYYYY':
+                if(date.getDate() < 10){
+                    nullForDay = 0
+                }
+                if(date.getMonth() < 10){
+                    nullForMonth = 0
+                }
+                return `${nullForMonth}${date.getMonth()+1}${del}${nullForDay}${date.getDate()}${del}${date.getFullYear()}`
+            break
+        }
+    }
+
 }
 
 module.exports = DATEFORMATER
