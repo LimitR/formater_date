@@ -10,6 +10,7 @@ formater_date служит удобным способом получить не
 
 Для начала мы качаем пакет из npm 
 `npm i formaster_date_and_time`
+
 Дальше подключаем к файлу
 `const DATE = require('./formater_date')`
 
