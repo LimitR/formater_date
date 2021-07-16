@@ -1,0 +1,22 @@
+{
+  "name": "formater_date",
+  "version": "0.8.1",
+  "description": "Служит инструментом для форматирования даты",
+  "main": "formater_date.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LimitR/formater_date.git"
+  },
+  "keywords": [
+    "date"
+  ],
+  "author": "Artem LimitR",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LimitR/formater_date/issues"
+  },
+  "homepage": "https://github.com/LimitR/formater_date#readme"
+}
