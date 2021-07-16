@@ -1,10 +1,10 @@
 {
-  "name": "formater_date",
-  "version": "0.8.1",
+  "name": "formaster_date_and_time",
+  "version": "1.8.1",
   "description": "Служит инструментом для форматирования даты",
   "main": "formater_date.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"No test specified\""
   },
   "repository": {
     "type": "git",
