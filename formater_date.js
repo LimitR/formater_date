@@ -59,48 +59,71 @@ class DATEFORMATER {
         }
 
     }
-    formatString(string, del = '', lastDay = 0){
-        this.date = new Date(Date.now() - 86400000 * (-lastDay))
+    formatString(text, del = '', lastDay = 0) {
         var nullForDay = ""
         var nullForMonth = ""
-        switch(string){
-            case 'DDMMYY':
-                if(this.date.getDate() < 10){
-                    nullForDay = 0
-                }
-                if(this.date.getMonth() < 10){
-                    nullForMonth = 0
-                }
-                return `${nullForDay}${this.date.getDate()}${del}${nullForMonth}${this.date.getMonth()+1}${del}${this.date.getFullYear().toString().slice(2)}`
-            break
-            case 'MMDDYY':
-                if(this.date.getDate() < 10){
-                    nullForDay = 0
-                }
-                if(this.date.getMonth() < 10){
-                    nullForMonth = 0
-                }
-                return `${nullForMonth}${this.date.getMonth()+1}${del}${nullForDay}${this.date.getDate()}${del}${this.date.getFullYear().toString().slice(2)}`
-            break
-            case 'DDMMYYYY':
-                if(this.date.getDate() < 10){
-                    nullForDay = 0
-                }
-                if(this.date.getMonth() < 10){
-                    nullForMonth = 0
-                }
-                return `${nullForDay}${this.date.getDate()}${del}${nullForMonth}${this.date.getMonth()+1}${del}${this.date.getFullYear()}`
-            break
-            case 'MMDDYYYY':
-                if(this.date.getDate() < 10){
-                    nullForDay = 0
-                }
-                if(this.date.getMonth() < 10){
-                    nullForMonth = 0
-                }
-                return `${nullForMonth}${this.date.getMonth()+1}${del}${nullForDay}${this.date.getDate()}${del}${this.date.getFullYear()}`
+        let nullForYear = ""
+        let one = new Date(Date.now() - 86400000 * (-lastDay))
+        let two = new Date(Date.now() - 86400000 * (-lastDay))
+        let tree = new Date(Date.now() - 86400000 * (-lastDay))
+        text = text.match(/.{1,2}/g);
+    
+        switch(text[0]){
+            case 'DD':
+                one = one.getDate()
             break
         }
+        switch(text[1]){
+            case 'DD':
+                two = two.getDate()
+                break
+        }
+        switch(text[2]){
+            case 'DD':
+                tree = tree.getDate()
+                break
+        }
+        switch(text[0]){
+            case 'MM':
+                one = one.getMonth() +1
+                break
+        }
+        switch(text[1]){
+            case 'MM':
+                two = two.getMonth()+1
+                break
+        }
+        switch(text[2]){
+            case 'MM':
+                tree = tree.getMonth()+1
+                break
+        }
+        switch(text[0]){
+            case 'YY':
+                one = one.getFullYear().toString().slice(2)
+                break
+        }
+        switch(text[1]){
+            case 'YY':
+                two = two.getFullYear().toString().slice(2)
+                break
+        }
+        switch(text[2]){
+            case 'YY':
+                tree = tree.getFullYear().toString().slice(2)
+                break
+        }
+        if(one < 10){
+            nullForDay = 0
+        }
+        if(two < 10){
+            nullForMonth = 0
+        }
+        if(tree < 10){
+            nullForYear = 0
+        }
+    
+        return `${nullForDay}${one}${del}${nullForMonth}${two}${del}${nullForYear}${tree}`
     }
     formatTime(string, del = '', lastHour = 0){
         var nullForHours = ""
@@ -135,7 +158,7 @@ class DATEFORMATER {
         }
 
     formatMillis(string, del = '', lastDay){
-        let date = new Date(lastDay + 1000000000)
+        let date = new Date(lastDay)
         var nullForDay = ""
         var nullForMonth = ""
         switch(string){
@@ -180,6 +203,7 @@ class DATEFORMATER {
 
     formatParse(string){
         let y = new Date()
+        let r
         let yearsForUser
         //Вывод из произвольной даты читаемую в нужном формате (от стандартной, до миллисекунд)
         let rTime = /0[0-9]{1}[:]0[0-9]{1}|[0-9]{2}[:][0-9]{2}/
@@ -199,16 +223,16 @@ class DATEFORMATER {
         if(rDate.test(string)){
             let dayFotMouth = 0
             let _string = string.split('.'||',')
-            for (let i =0; i < _string[1];i++){
+            for (let i =0; i < _string[1] - 1;i++){
             dayFotMouth = dayFotMouth + mouth[i]
             }
-           let p = (dayFotMouth - _string[0]) * 86400000
+           let p = (+dayFotMouth + +_string[0]) * 86400000
 
            if(+_string[2] == +y.getFullYear().toString().slice(2)){
-            _string[2] = +_string[2] + 2000
-             yearsForUser = (_string[2] - 1970) * 31536000000
+            r = +_string[2] + 2000
+             yearsForUser = (r - 1970) * 31536000000
            }
-            return yearsForUser + p
+            return yearsForUser + p + (86400000 * 12)
         }
     }
 
