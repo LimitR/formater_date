@@ -216,6 +216,20 @@ class DATEFORMATER {
                 return `${nullForHours}${this.date.getHours()}${del}${nullForMinutes}${this.date.getMinutes()}${del}${nullForSeconds}${this.date.getSeconds()}${del}${nullForMilliseconds}${this.date.getMilliseconds()}`
         }
         }
+        formatTimer(text, func = returnValueTrue){
+            text = text.split(':');
+            let hours_timer = +text[0]
+            let minutes_timer = +text[1]
+            let seconds_timer = +text[2]
+            let sumFullTimeMillis = (hours_timer * 60 * 60 * 1000) + (minutes_timer * 60 * 1000) + (seconds_timer * 1000)
+            let sumFullTimeMillisForInterval = sumFullTimeMillis
+
+            setTimeout(() => {
+                func()
+            }, sumFullTimeMillisForInterval);
+
+
+        }
 
     formatMillis(string, del = '', lastDay){
         let date = new Date(lastDay)
@@ -296,6 +310,12 @@ class DATEFORMATER {
         }
     }
 
+
+}
+
+
+function returnValueTrue(){
+    return true
 }
 
 module.exports = DATEFORMATER
