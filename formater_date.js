@@ -92,10 +92,22 @@ class DATEFORMATER {
             lastDay = y
         }
         let text
+        del = del.match(/.{1}/g)
+        if(del.length < 2){
+            del = del[0]
+        }else{
+            for(let i = 0; i < 10; i++){
+                del.push(del[del.length - 1])
+            }
+        }
         let one = new Date(Date.now() - (-lastDay) * dayInMill)
         let nullForDay = ""
         let nullForMonth = ""
         let nullForYear = ""
+        let nullForHours = ""
+        let nullForMint = ""
+        let nullForSec = ""
+
         text = text1.match(/.{1,2}/g);
         let t = text1.match(/Y{4}/)
     
@@ -131,11 +143,50 @@ class DATEFORMATER {
         if(text[2] < 10){
             nullForYear = 0
         }
+
+        let hours = text.indexOf('hh')
+        let minutes = text.indexOf('mm')
+        let seconds = text.indexOf('ss')
+        let mill_seconds = text.indexOf('Ms')
+        
+        if (mill_seconds !== -1) {
+            text[mill_seconds] = one.getMilliseconds()
+        }
+        if (hours !== -1) {
+            text[hours] = one.getHours();
+        }
+        if (minutes !== -1) {
+            text[minutes] = one.getMinutes();
+        }
+        if (seconds !== -1) {
+            text[seconds] = one.getSeconds();
+        }
+        if(text[3] < 10){
+            nullForHours = 0
+        }
+        if(text[4] < 10){
+            nullForMint = 0
+        }
+        if(text[5] < 10){
+            nullForSec = 0
+        }
+        if (text.length == 7){
+            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}  ${nullForHours}${text[3]}${del[3]}${nullForMint}${text[4]}${del[4]}${nullForSec}${text[5]}${del[5]}${nullForSec}${text[6]}`
+        }
+        if (text.length == 6){
+            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}  ${nullForHours}${text[3]}${del[3]}${nullForMint}${text[4]}${del[4]}${nullForSec}${text[5]}`//nullForSec
+        }
+        if (text.length == 5){
+            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}  ${nullForHours}${text[3]}${del[3]}${nullForMint}${text[4]}`
+        }
+        if (text.length == 4){
+            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}  ${nullForHours}${text[3]}`
+        }
         if (text.length == 3){
-            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}${del}${nullForYear}${text[2]}`
+            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}`
         }
         if (text.length == 2){
-            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}`
+            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}`
         }
         if (text.length == 1){
             return `${nullForDay}${text[0]}`
@@ -153,6 +204,14 @@ class DATEFORMATER {
             lastHour = y
         }
         let one = new Date(Date.now() - ((-lastHour) * 1000 ))
+        del = del.match(/.{1}/g)
+        if(del.length < 2){
+            del = del[0]
+        }else{
+            for(let i = 0; i < 10; i++){
+                del.push(del[del.length - 1])
+            }
+        }
         let text
         let nullForDay = ""
         let nullForMonth = ""
@@ -186,13 +245,13 @@ class DATEFORMATER {
         }
 
         if (text.length == 4){
-            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}${del}${nullForYear}${text[2]}${del}${text[3]}`
+            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}${del[2]}${text[3]}`
         }
         if (text.length == 3){
-            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}${del}${nullForYear}${text[2]}`
+            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}`
         }
         if (text.length == 2){
-            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}`
+            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}`
         }
         if (text.length == 1){
             return `${nullForDay}${text[0]}`
@@ -231,7 +290,14 @@ class DATEFORMATER {
     
         let index_year = -1
         let index_fullYear = -1
-    
+        del = del.match(/.{1}/g)
+        if(del.length < 2){
+            del = del[0]
+        }else{
+            for(let i = 0; i < 10; i++){
+                del.push(del[del.length - 1])
+            }
+        }
         if(t == null){
             index_year = text.indexOf('YY')
         }else{
@@ -289,13 +355,13 @@ class DATEFORMATER {
         }
 
         if (text.length == 4){
-            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}${del}${nullForYear}${text[2]}${del}${text[3]}`
+            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}${del[2]}${text[3]}`
         }
         if (text.length == 3){
-            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}${del}${nullForYear}${text[2]}`
+            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}`
         }
         if (text.length == 2){
-            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}`
+            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}`
         }
         if (text.length == 1){
             return `${nullForDay}${text[0]}`
