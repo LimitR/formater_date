@@ -180,16 +180,16 @@ class DATEFORMATER {
             nullForSec = 0
         }
         if (text.length == 7){
-            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}  ${nullForHours}${text[3]}${del[2]}${nullForMint}${text[4]}${del[3]}${nullForSec}${text[5]}${del[4]}${nullForSec}${text[6]}`
+            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}${del[2]}${nullForHours}${text[3]}${del[3]}${nullForMint}${text[4]}${del[4]}${nullForSec}${text[5]}${del[5]}${nullForSec}${text[6]}`
         }
         if (text.length == 6){
-            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}  ${nullForHours}${text[3]}${del[2]}${nullForMint}${text[4]}${del[3]}${nullForSec}${text[5]}`//nullForSec
+            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}${del[2]}${nullForHours}${text[3]}${del[3]}${nullForMint}${text[4]}${del[4]}${nullForSec}${text[5]}`//nullForSec
         }
         if (text.length == 5){
-            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}  ${nullForHours}${text[3]}${del[2]}${nullForMint}${text[4]}`
+            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}${del[2]}${nullForHours}${text[3]}${del[3]}${nullForMint}${text[4]}`
         }
         if (text.length == 4){
-            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}  ${nullForHours}${text[3]}`
+            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}${del[2]}${nullForHours}${text[3]}`
         }
         if (text.length == 3){
             return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}`
