@@ -29,161 +29,95 @@ class DATEFORMATER {
         }}
 
 
-    formatNumber(text, lastDay = 0){
+    formatNumber(text1, lastDay = 0){
+        let text
+        let one = new Date(Date.now() - (-lastDay) * dayInMill)
         let nullForDay = ""
         let nullForMonth = ""
         let nullForYear = ""
-        let one = new Date(Date.now() - dayInMill * (-lastDay))
-        let two = new Date(Date.now() - dayInMill * (-lastDay))
-        let tree = new Date(Date.now() - dayInMill * (-lastDay))
-        text = text.match(/.{1,2}/g);
+        text = text1.match(/.{1,2}/g);
+        let t = text1.match(/Y{4}/)
     
-        switch(text[0]){
-            case 'DD':
-                one = one.getDate()
-            break
+        let index_year = -1
+        let index_fullYear = -1
+    
+        if(t == null){
+            index_year = text.indexOf('YY')
+        }else{
+            index_fullYear = text.indexOf('YY')
         }
-        switch(text[1]){
-            case 'DD':
-                two = two.getDate()
-                break
+        if (index_year !== -1) {
+            text[index_year] = one.getFullYear().toString().slice(2)
         }
-        switch(text[2]){
-            case 'DD':
-                tree = tree.getDate()
-                break
+        if (index_fullYear !== -1) {
+            text[index_fullYear] = one.getFullYear()
+            text.splice(index_fullYear + 1,1)
         }
-        switch(text[0]){
-            case 'MM':
-                one = one.getMonth() +1
-                break
+        let index_day = text.indexOf('DD')
+        let index_mes = text.indexOf('MM')
+        if (index_day !== -1) {
+            text[index_day] = one.getDate();
         }
-        switch(text[1]){
-            case 'MM':
-                two = two.getMonth()+1
-                break
+        if (index_mes !== -1) {
+            text[index_mes] = one.getMonth() + 1;
         }
-        switch(text[2]){
-            case 'MM':
-                tree = tree.getMonth()+1
-                break
-        }
-        switch(text[0]){
-            case 'YY':
-                if(text[3] != undefined){
-                    one = one.getFullYear().toString()
-                }else{
-                    one = one.getFullYear().toString().slice(2)
-                }
-                break
-        }
-        switch(text[1]){
-            case 'YY':
-                if(text[3] != undefined){
-                    two = two.getFullYear().toString()
-                }else{
-                    two = two.getFullYear().toString().slice(2)
-                }
-                break
-        }
-        switch(text[2]){
-            case 'YY':
-                if(text[3] != undefined){
-                    tree = tree.getFullYear().toString()
-                }else{
-                    tree = tree.getFullYear().toString().slice(2)
-                }              
-                break
-        }
-        if(one < 10){
+        if(text[0] < 10){
             nullForDay = 0
         }
-        if(two < 10){
+        if(text[1] < 10){
             nullForMonth = 0
         }
-        if(tree < 10){
+        if(text[2] < 10){
             nullForYear = 0
         }
     
-        return +`${nullForDay}${one}${nullForMonth}${two}${nullForYear}${tree}`
+    
+       return +`${nullForDay}${text[0]}${nullForMonth}${text[1]}${nullForYear}${text[2]}`
     }
-    formatString(text, del = '', lastDay = 0) {
+    formatString(text1, del = '', lastDay = 0) {
+        let text
+        let one = new Date(Date.now() - (-lastDay) * dayInMill)
         let nullForDay = ""
         let nullForMonth = ""
         let nullForYear = ""
-        let one = new Date(Date.now() - dayInMill * (-lastDay))
-        let two = new Date(Date.now() - dayInMill * (-lastDay))
-        let tree = new Date(Date.now() - dayInMill * (-lastDay))
-        text = text.match(/.{1,2}/g);
+        text = text1.match(/.{1,2}/g);
+        let t = text1.match(/Y{4}/)
     
-        switch(text[0]){
-            case 'DD':
-                one = one.getDate()
-            break
+        let index_year = -1
+        let index_fullYear = -1
+    
+        if(t == null){
+            index_year = text.indexOf('YY')
+        }else{
+            index_fullYear = text.indexOf('YY')
         }
-        switch(text[1]){
-            case 'DD':
-                two = two.getDate()
-                break
+        if (index_year !== -1) {
+            text[index_year] = one.getFullYear().toString().slice(2)
         }
-        switch(text[2]){
-            case 'DD':
-                tree = tree.getDate()
-                break
+        if (index_fullYear !== -1) {
+            text[index_fullYear] = one.getFullYear()
+            text.splice(index_fullYear + 1,1)
         }
-        switch(text[0]){
-            case 'MM':
-                one = one.getMonth() +1
-                break
+        let index_day = text.indexOf('DD')
+        let index_mes = text.indexOf('MM')
+        if (index_day !== -1) {
+            text[index_day] = one.getDate();
         }
-        switch(text[1]){
-            case 'MM':
-                two = two.getMonth()+1
-                break
+        if (index_mes !== -1) {
+            text[index_mes] = one.getMonth() + 1;
         }
-        switch(text[2]){
-            case 'MM':
-                tree = tree.getMonth()+1
-                break
-        }
-        switch(text[0]){
-            case 'YY':
-                if(text[3] != undefined){
-                    one = one.getFullYear().toString()
-                }else{
-                    one = one.getFullYear().toString().slice(2)
-                }
-                break
-        }
-        switch(text[1]){
-            case 'YY':
-                if(text[3] != undefined){
-                    two = two.getFullYear().toString()
-                }else{
-                    two = two.getFullYear().toString().slice(2)
-                }
-                break
-        }
-        switch(text[2]){
-            case 'YY':
-                if(text[3] != undefined){
-                    tree = tree.getFullYear().toString()
-                }else{
-                    tree = tree.getFullYear().toString().slice(2)
-                }              
-                break
-        }
-        if(one < 10){
+        if(text[0] < 10){
             nullForDay = 0
         }
-        if(two < 10){
+        if(text[1] < 10){
             nullForMonth = 0
         }
-        if(tree < 10){
+        if(text[2] < 10){
             nullForYear = 0
         }
     
-        return `${nullForDay}${one}${del}${nullForMonth}${two}${del}${nullForYear}${tree}`
+    
+       return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}${del}${nullForYear}${text[2]}`
     }
     formatTime(string, del = '', lastHour = 0){
         let nullForHours = ""
@@ -230,49 +164,71 @@ class DATEFORMATER {
         }
 
 
-    formatMillis(string, del = '', lastDay){
-        let date = new Date(lastDay)
+    formatMillis(text1, del = '', lastDay){
+        let text
+        let one = new Date(lastDay)
         let nullForDay = ""
         let nullForMonth = ""
-        switch(string){
-            case 'DDMMYY':
-                if(date.getDate() < 10){
+        let nullForYear = ""
+        text = text1.match(/.{1,2}/g);
+        let t = text1.match(/Y{4}/)
+    
+        let index_year = -1
+        let index_fullYear = -1
+    
+        if(t == null){
+            index_year = text.indexOf('YY')
+        }else{
+            index_fullYear = text.indexOf('YY')
+        }
+        if (index_year !== -1) {
+            text[index_year] = one.getFullYear().toString().slice(2)
+        }
+        if (index_fullYear !== -1) {
+            text[index_fullYear] = one.getFullYear()
+            text.splice(index_fullYear + 1,1)
+        }
+        let index_day = text.indexOf('DD')
+        let index_mes = text.indexOf('MM')
+        if (index_day !== -1) {
+            text[index_day] = one.getDate();
+        }
+        if (index_mes !== -1) {
+            text[index_mes] = one.getMonth() + 1;
+        }
+        if(text[0] < 10){
+            nullForDay = 0
+        }
+        if(text[1] < 10){
+            nullForMonth = 0
+        }
+        if(text[2] < 10){
+            nullForYear = 0
+        }
+        switch(text1){
+            case 'hhmmss':
+                if(date.getHours() < 10){
                     nullForDay = 0
                 }
-                if(date.getMonth() < 10){
+                if(date.getMinutes() < 10){
                     nullForMonth = 0
                 }
-                return `${nullForDay}${date.getDate()}${del}${nullForMonth}${date.getMonth()+1}${del}${date.getFullYear().toString().slice(2)}`
-            break
-            case 'MMDDYY':
-                if(date.getDate() < 10){
-                    nullForDay = 0
+                if(date.getSeconds() < 10){
+                    nullForMonth1 = 0
                 }
-                if(date.getMonth() < 10){
-                    nullForMonth = 0
+                if(date.getSeconds() <= 0){
+                    return true
+                }else{
+                    return `${nullForDay}${date.getHours() - 3}${del}${nullForMonth}${date.getMinutes()}${del}${nullForMonth1}${date.getSeconds()}`
                 }
-                return `${nullForMonth}${date.getMonth()+1}${del}${nullForDay}${date.getDate()}${del}${date.getFullYear().toString().slice(2)}`
-            break
-            case 'DDMMYYYY':
-                if(date.getDate() < 10){
-                    nullForDay = 0
-                }
-                if(date.getMonth() < 10){
-                    nullForMonth = 0
-                }
-                return `${nullForDay}${date.getDate()}${del}${nullForMonth}${date.getMonth()+1}${del}${date.getFullYear()}`
-            break
-            case 'MMDDYYYY':
-                if(date.getDate() < 10){
-                    nullForDay = 0
-                }
-                if(date.getMonth() < 10){
-                    nullForMonth = 0
-                }
-                return `${nullForMonth}${date.getMonth()+1}${del}${nullForDay}${date.getDate()}${del}${date.getFullYear()}`
             break
         }
-        }
+    
+       return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}${del}${nullForYear}${text[2]}`
+        
+        // }
+        
+    }
 
     formatParse(string){
         let y = new Date()
@@ -312,7 +268,7 @@ class DATEFORMATER {
            }if(+_string[2] == +y.getFullYear().toString()){
             yearsForUser = (+_string[2] - 1970) * yearsInMill
            }
-            return yearsForUser + p + (dayInMill * 12) // Высокосные когда. Нужно исправить, дабы обновлялось автоматически
+            return yearsForUser + p + (dayInMill * 12) // Высокосные года. Нужно исправить, дабы обновлялось автоматически
         }
     }
 
