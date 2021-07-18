@@ -85,6 +85,7 @@ class DATEFORMATER {
     formatString(text1, del = '', lastDay = 0) {
         if(typeof(del) != 'string' && lastDay == 0){
             lastDay = del
+            del = ''
         }
         if(typeof(lastDay) === 'string' && typeof(del) != 'string'){
             let y = del
@@ -92,12 +93,18 @@ class DATEFORMATER {
             lastDay = y
         }
         let text
-        del = del.match(/.{1}/g)
-        if(del.length < 2){
+        if(del.length > 0){
+            del = del.match(/.{1}/g)
+        }else{
+            del = ['','','','','']
+        }
+        
+
+        if(del.length < 2 && del.length > 0){
             for(let i = 0; i < 10; i++){
                 del.push(del[del.length - 1])
             }
-        }else{
+        }if(del.length > 2){
             for(let i = 0; i < 10; i++){
                 del.push(del[del.length - 1])
             }
