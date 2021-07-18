@@ -1,6 +1,6 @@
 {
   "name": "formaster_date_and_time",
-  "version": "1.9.3",
+  "version": "1.10.0",
   "description": "Служит инструментом для форматирования даты",
   "main": "formater_date.js",
   "scripts": {
