@@ -1,6 +1,6 @@
 // Константы для использования 
-const dayInMill = 86400000 // Сутки 
-const oneHours = 3600000 // Час
+const dayInMill = 86400000      // Сутки 
+const oneHours = 3600000        // Час
 const yearsInMill = 31536000000 // Год
 
 
@@ -70,11 +70,27 @@ class DATEFORMATER {
         if(text[2] < 10){
             nullForYear = 0
         }
+        if (text.length == 3){
+            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}${del}${nullForYear}${text[2]}`
+        }
+        if (text.length == 2){
+            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}`
+        }
+        if (text.length == 1){
+            return `${nullForDay}${text[0]}`
+        }
     
-    
-       return +`${nullForDay}${text[0]}${nullForMonth}${text[1]}${nullForYear}${text[2]}`
+    //    return +`${nullForDay}${text[0]}${nullForMonth}${text[1]}${nullForYear}${text[2]}`
     }
     formatString(text1, del = '', lastDay = 0) {
+        if(typeof(del) != 'string' && lastDay == 0){
+            lastDay = del
+        }
+        if(typeof(lastDay) === 'string' && typeof(del) != 'string'){
+            let y = del
+            del = lastDay
+            lastDay = y
+        }
         let text
         let one = new Date(Date.now() - (-lastDay) * dayInMill)
         let nullForDay = ""
@@ -115,39 +131,71 @@ class DATEFORMATER {
         if(text[2] < 10){
             nullForYear = 0
         }
-    
-    
-       return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}${del}${nullForYear}${text[2]}`
+        if (text.length == 3){
+            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}${del}${nullForYear}${text[2]}`
+        }
+        if (text.length == 2){
+            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}`
+        }
+        if (text.length == 1){
+            return `${nullForDay}${text[0]}`
+        }
+
     }
     formatTime(string, del = '', lastHour = 0){
-        let nullForHours = ""
-        let nullForMinutes = ""
-        let nullForSeconds = ""
-        let nullForMilliseconds = ""
-        this.date = new Date(Date.now() - oneHours * (-lastHour))
-        if(this.date.getHours() < 10){
-            nullForHours = 0
+        if(typeof(del) != 'string' && lastHour === 0 ){
+            lastHour = del
+            del = ''
         }
-        if(this.date.getMinutes() < 10){
-            nullForMinutes = 0
+        if(typeof(lastHour) === 'string'){
+            let y = del
+            del = lastHour
+            lastHour = y
         }
-        if(this.date.getSeconds() < 10){
-            nullForSeconds = 0
+        let one = new Date(Date.now() - ((-lastHour) * 1000 ))
+        let text
+        let nullForDay = ""
+        let nullForMonth = ""
+        let nullForYear = ""
+        text = string.match(/.{1,2}/g);
+        let hours = text.indexOf('hh')
+        let minutes = text.indexOf('mm')
+        let seconds = text.indexOf('ss')
+        let mill_seconds = text.indexOf('Ms')
+        
+        if (mill_seconds !== -1) {
+            text[mill_seconds] = one.getMilliseconds()
         }
-        if(this.date.getMilliseconds() < 10){
-            nullForMilliseconds = 0
+        if (hours !== -1) {
+            text[hours] = one.getHours();
         }
-        switch(string){
-            case 'hhmmss':
-                return `${nullForHours}${this.date.getHours()}${del}${nullForMinutes}${this.date.getMinutes()}${del}${nullForSeconds}${this.date.getSeconds()}`
+        if (minutes !== -1) {
+            text[minutes] = one.getMinutes();
         }
-        switch(string){
-            case 'hhmm':
-                return `${nullForHours}${this.date.getHours()}${del}${nullForMinutes}${this.date.getMinutes()}`
+        if (seconds !== -1) {
+            text[seconds] = one.getSeconds();
         }
-        switch(string){
-            case 'hhmmssMsMs':
-                return `${nullForHours}${this.date.getHours()}${del}${nullForMinutes}${this.date.getMinutes()}${del}${nullForSeconds}${this.date.getSeconds()}${del}${nullForMilliseconds}${this.date.getMilliseconds()}`
+        if(text[0] < 10){
+            nullForDay = 0
+        }
+        if(text[1] < 10){
+            nullForMonth = 0
+        }
+        if(text[2] < 10){
+            nullForYear = 0
+        }
+
+        if (text.length == 4){
+            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}${del}${nullForYear}${text[2]}${del}${text[3]}`
+        }
+        if (text.length == 3){
+            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}${del}${nullForYear}${text[2]}`
+        }
+        if (text.length == 2){
+            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}`
+        }
+        if (text.length == 1){
+            return `${nullForDay}${text[0]}`
         }
         }
         formatTimer(text, func = returnValueTrue){
@@ -165,6 +213,14 @@ class DATEFORMATER {
 
 
     formatMillis(text1, del = '', lastDay){
+        if(typeof(del) != 'string' && typeof(lastDay) != 'number'){
+            lastDay = del
+        }
+        if(typeof(lastDay) === 'string' && typeof(del) != 'string'){
+            let y = del
+            del = lastDay
+            lastDay = y
+        }
         let text
         let one = new Date(lastDay)
         let nullForDay = ""
@@ -205,26 +261,48 @@ class DATEFORMATER {
         if(text[2] < 10){
             nullForYear = 0
         }
-        switch(text1){
-            case 'hhmmss':
-                if(date.getHours() < 10){
-                    nullForDay = 0
-                }
-                if(date.getMinutes() < 10){
-                    nullForMonth = 0
-                }
-                if(date.getSeconds() < 10){
-                    nullForMonth1 = 0
-                }
-                if(date.getSeconds() <= 0){
-                    return true
-                }else{
-                    return `${nullForDay}${date.getHours() - 3}${del}${nullForMonth}${date.getMinutes()}${del}${nullForMonth1}${date.getSeconds()}`
-                }
-            break
+        let hours = text.indexOf('hh')
+        let minutes = text.indexOf('mm')
+        let seconds = text.indexOf('ss')
+        let mill_seconds = text.indexOf('Ms')
+        
+        if (mill_seconds !== -1) {
+            text[mill_seconds] = one.getMilliseconds()
+        }
+        if (hours !== -1) {
+            text[hours] = one.getHours() - 3;
+        }
+        if (minutes !== -1) {
+            text[minutes] = one.getMinutes();
+        }
+        if (seconds !== -1) {
+            text[seconds] = one.getSeconds();
+        }
+        if(text[0] < 10){
+            nullForDay = 0
+        }
+        if(text[1] < 10){
+            nullForMonth = 0
+        }
+        if(text[2] < 10){
+            nullForYear = 0
+        }
+
+        if (text.length == 4){
+            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}${del}${nullForYear}${text[2]}${del}${text[3]}`
+        }
+        if (text.length == 3){
+            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}${del}${nullForYear}${text[2]}`
+        }
+        if (text.length == 2){
+            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}`
+        }
+        if (text.length == 1){
+            return `${nullForDay}${text[0]}`
+        
         }
     
-       return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}${del}${nullForYear}${text[2]}`
+    //    return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}${del}${nullForYear}${text[2]}`
         
         // }
         
@@ -279,6 +357,8 @@ class DATEFORMATER {
 function returnValueTrue(){
     return true
 }
+
+
 
 module.exports = DATEFORMATER
 
