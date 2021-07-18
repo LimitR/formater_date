@@ -222,14 +222,13 @@ class DATEFORMATER {
             let minutes_timer = +text[1]
             let seconds_timer = +text[2]
             let sumFullTimeMillis = (hours_timer * 60 * 60 * 1000) + (minutes_timer * 60 * 1000) + (seconds_timer * 1000)
-            let sumFullTimeMillisForInterval = sumFullTimeMillis
-
-            setTimeout(() => {
-                func()
-            }, sumFullTimeMillisForInterval);
-
-
+            return new Promise((resolve, reject)=>{
+                setTimeout(() => {
+                    resolve(func()) 
+                  }, sumFullTimeMillis);
+            })
         }
+
 
     formatMillis(string, del = '', lastDay){
         let date = new Date(lastDay)
@@ -290,7 +289,12 @@ class DATEFORMATER {
             return 'Смотришь день недели'
         }
         if(rTime.test(string)){
-            return 'Смотришь время'
+            string = string.split(':');
+            let hours_timer = +string[0]
+            let minutes_timer = +string[1]
+            let seconds_timer = +string[2]
+            let sumFullTimeMillis = (hours_timer * 60 * 60 * 1000) + (minutes_timer * 60 * 1000) + (seconds_timer * 1000)
+            return sumFullTimeMillis
         }
 
 
@@ -305,6 +309,8 @@ class DATEFORMATER {
            if(+_string[2] == +y.getFullYear().toString().slice(2)){
             r = +_string[2] + 2000
              yearsForUser = (r - 1970) * yearsInMill
+           }if(+_string[2] == +y.getFullYear().toString()){
+            yearsForUser = (+_string[2] - 1970) * yearsInMill
            }
             return yearsForUser + p + (dayInMill * 12) // Высокосные когда. Нужно исправить, дабы обновлялось автоматически
         }
