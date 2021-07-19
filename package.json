@@ -11,7 +11,11 @@
     "url": "git+https://github.com/LimitR/formater_date.git"
   },
   "keywords": [
-    "date"
+    "date",
+    "time",
+    "immutable",
+    "moment",
+    "format"
   ],
   "author": "Artem LimitR",
   "license": "ISC",
