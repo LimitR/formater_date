@@ -143,16 +143,6 @@ class DATEFORMATER {
         if (index_mes !== -1) {
             text[index_mes] = one.getMonth() + 1;
         }
-        if(text[0] < 10){
-            nullForDay = 0
-        }
-        if(text[1] < 10){
-            nullForMonth = 0
-        }
-        if(text[2] < 10){
-            nullForYear = 0
-        }
-
         let hours = text.indexOf('hh')
         let minutes = text.indexOf('mm')
         let seconds = text.indexOf('ss')
@@ -169,6 +159,15 @@ class DATEFORMATER {
         }
         if (seconds !== -1) {
             text[seconds] = one.getSeconds();
+        }
+        if(text[0] < 10){
+            nullForDay = 0
+        }
+        if(text[1] < 10){
+            nullForMonth = 0
+        }
+        if(text[2] < 10){
+            nullForYear = 0
         }
         if(text[3] < 10){
             nullForHours = 0
@@ -218,6 +217,7 @@ class DATEFORMATER {
         text = text1.match(/[A-Za-z]{2}/g);
         let t = text1.match(/Y{4}/)
         del = text1.match(/[-+/:.,\s]/g)
+        let numb = text1.match(/\d+/g)
         let index_year = -1
         let index_fullYear = -1
     
@@ -241,18 +241,17 @@ class DATEFORMATER {
         if (index_mes !== -1) {
             text[index_mes] = one.getMonth() + 1;
         }
-        if(text[0] < 10){
-            nullForDay = 0
-        }
-        if(text[1] < 10){
-            nullForMonth = 0
-        }
-        if(text[2] < 10){
-            nullForYear = 0
-        }
         for(let i = 0; i < 10;i++){
             if(del[i] == undefined){
                 del[i] = ''
+            }
+        }
+        if(numb == null){
+            numb = ['0','0','0','0','0','0']
+        }
+        for(let i = 0; i < 10;i++){
+            if(numb[i] == undefined){
+                numb[i] = '0'
             }
         }
         let hours = text.indexOf('hh')
@@ -272,6 +271,15 @@ class DATEFORMATER {
         if (seconds !== -1) {
             text[seconds] = one.getSeconds();
         }
+        if(text[0] < 10){
+            nullForDay = 0
+        }
+        if(text[1] < 10){
+            nullForMonth = 0
+        }
+        if(text[2] < 10){
+            nullForYear = 0
+        }
         if(text[3] < 10){
             nullForHours = 0
         }
@@ -282,25 +290,25 @@ class DATEFORMATER {
             nullForSec = 0
         }
         if (text.length == 7){
-            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}${del[2]}${nullForHours}${text[3]}${del[3]}${nullForMint}${text[4]}${del[4]}${nullForSec}${text[5]}${del[5]}${nullForSec}${text[6]}`
+            return `${nullForDay}${text[0] - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}${del[1]}${nullForYear}${text[2] - +numb[2]}${del[2]}${nullForHours}${text[3] - +numb[3]}${del[3]}${nullForMint}${text[4] - +numb[4]}${del[4]}${nullForSec}${text[5] - +numb[5]}${del[5]}${nullForSec}${text[6] - +numb[6]}`
         }
         if (text.length == 6){
-            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}${del[2]}${nullForHours}${text[3]}${del[3]}${nullForMint}${text[4]}${del[4]}${nullForSec}${text[5]}`//nullForSec
+            return `${nullForDay}${text[0] - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}${del[1]}${nullForYear}${text[2] - +numb[2]}${del[2]}${nullForHours}${text[3] - +numb[3]}${del[3]}${nullForMint}${text[4] - +numb[4]}${del[4]}${nullForSec}${text[5] - +numb[5]}`//nullForSec
         }
         if (text.length == 5){
-            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}${del[2]}${nullForHours}${text[3]}${del[3]}${nullForMint}${text[4]}`
+            return `${nullForDay}${text[0] - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}${del[1]}${nullForYear}${text[2] - +numb[2]}${del[2]}${nullForHours}${text[3] - +numb[3]}${del[3]}${nullForMint}${text[4] - +numb[4]}`
         }
         if (text.length == 4){
-            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}${del[2]}${nullForHours}${text[3]}`
+            return `${nullForDay}${text[0] - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}${del[1]}${nullForYear}${text[2] - +numb[2]}${del[2]}${nullForHours}${text[3] - +numb[3]}`
         }
         if (text.length == 3){
-            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}${del[1]}${nullForYear}${text[2]}`
+            return `${nullForDay}${text[0] - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}${del[1]}${nullForYear}${text[2] - +numb[2]}`
         }
         if (text.length == 2){
-            return `${nullForDay}${text[0]}${del[0]}${nullForMonth}${text[1]}`
+            return `${nullForDay}${text[0]  - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}`
         }
         if (text.length == 1){
-            return `${nullForDay}${text[0]}`
+            return `${nullForDay}${text[0]  - +numb[0]}`
         }
 
     }
