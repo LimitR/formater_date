@@ -86,7 +86,7 @@ class DATEFORMATER {
     formatUsers(text1, lastDay = 0) {
         let text
         let del
-        let one = new Date(Date.now() - (-lastDay) * dayInMill)
+        let one = new Date(Date.now() - (-lastDay) * oneHours)
         let nullForDay = ""
         let nullForMonth = ""
         let nullForYear = ""
@@ -121,10 +121,14 @@ class DATEFORMATER {
         if (index_mes !== -1) {
             text[index_mes] = one.getMonth() + 1;
         }
-        for(let i = 0; i < 10;i++){
-            if(del[i] == undefined){
-                del[i] = ''
+        if(del != undefined){
+            for(let i = 0; i < 10;i++){
+                if(del[i] == undefined){
+                    del[i] = ''
+                }
             }
+        }else{
+            del = ['', '', '', '', '', '', '', '', '']
         }
         if(numb == null){
             numb = ['0','0','0','0','0','0']
