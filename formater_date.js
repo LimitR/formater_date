@@ -123,9 +123,14 @@ class DATEFORMATER {
         }
         if(del != undefined){
             for(let i = 0; i < 10;i++){
-                if(del[i] == undefined){
-                    del[i] = ''
-                }
+                for(let i = 0; i < 10;i++){
+            if(del == null){
+                del = ''
+            }
+            if(del[i] == undefined && del[i] != null){
+                del[i] = ''
+            }
+        }
             }
         }else{
             del = ['', '', '', '', '', '', '', '', '']
