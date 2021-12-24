@@ -1,381 +1,154 @@
-// Константы для использования 
-const dayInMill = 86400000      // Сутки 
-const oneHours = 3600000        // Час
-const yearsInMill = 31536000000 // Год
-
-
 class DATEFORMATER { 
-    constructor(date, day){
-    switch(date){
-        case 'now':
-            this.date = new Date()
-        break
-        case 'lastDay':
-            this.date = new Date(Date.now() - dayInMill * day)
-        break
-        
-        case 'time':
-            this.date = new Date(Date.now() - oneHours * day)
-        break
-        
-        case 'myValue':
-            this.date = date
-        break
-        case undefined:
-            this.date = null
-        break
-
-            
-        }}
-
-
-    formatNumber(text1, lastDay = 0){
-        let text
-        let one = new Date(Date.now() - (-lastDay) * dayInMill)
-        let nullForDay = ""
-        let nullForMonth = ""
-        let nullForYear = ""
-        text = text1.match(/.{1,2}/g);
-        let t = text1.match(/Y{4}/)
+    #locales;
+    #date;
+    #time;
+    #timeZone;
+    #errors = [];
     
-        let index_year = -1
-        let index_fullYear = -1
-    
-        if(t == null){
-            index_year = text.indexOf('YY')
-        }else{
-            index_fullYear = text.indexOf('YY')
-        }
-        if (index_year !== -1) {
-            text[index_year] = one.getFullYear().toString().slice(2)
-        }
-        if (index_fullYear !== -1) {
-            text[index_fullYear] = one.getFullYear()
-            text.splice(index_fullYear + 1,1)
-        }
-        let index_day = text.indexOf('DD')
-        let index_mes = text.indexOf('MM')
-        if (index_day !== -1) {
-            text[index_day] = one.getDate();
-        }
-        if (index_mes !== -1) {
-            text[index_mes] = one.getMonth() + 1;
-        }
-        if(text[0] < 10){
-            nullForDay = 0
-        }
-        if(text[1] < 10){
-            nullForMonth = 0
-        }
-        if(text[2] < 10){
-            nullForYear = 0
-        }
-        if (text.length == 3){
-            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}${del}${nullForYear}${text[2]}`
-        }
-        if (text.length == 2){
-            return `${nullForDay}${text[0]}${del}${nullForMonth}${text[1]}`
-        }
-        if (text.length == 1){
-            return `${nullForDay}${text[0]}`
-        }
-    
-    //    return +`${nullForDay}${text[0]}${nullForMonth}${text[1]}${nullForYear}${text[2]}`
+    constructor(){
+        this.#locales = 'ru';
+        this.#date = Date.now()
+        this.#time = 0;
+        this.#timeZone;
+        this.#errors;
     }
 
-    formatUsers(text1, lastDay = 0) {
-        let text
-        let del
-        let one = new Date(Date.now() - (-lastDay) * oneHours)
-        let nullForDay = ""
-        let nullForMonth = ""
-        let nullForYear = ""
-        let nullForHours = ""
-        let nullForMint = ""
-        let nullForSec = ""
+    /**
+     * 
+     * @param {'12.12.1999'} date 
+     * @param {'DD MM YYYY'} format 
+     * @returns {this}
+     */
+    addDate(date, format){
+        if(format === 'JS') {
+            this.#date = new Date(date).toLocaleString(this.#locales, {timeZone: this.#timeZone})
+            return this
+        }
+        let userDate = date.split(/\W/).filter(element => {return element.length > 0});
+        let formatDate = format.split(/\W/).filter(element => {return element.length > 0});
+        let result = {};
+        formatDate.forEach( (element, index) => {
+            switch(element){
+                case 'YY':
+                    result.one = +userDate[index]
+                break
+                case 'YYYY':
+                    result.one = +userDate[index]
+                break
+                case 'MM':
+                    result.two = +userDate[index] - 1
+                break
+                case 'MMMM':
+                    result.two = +userDate[index]
+                break
+                case 'DD':
+                    result.three = +userDate[index]
+                break
+                case 'hh':
+                    result.four = +userDate[index]
+                break
+                case 'mm':
+                    result.five = +userDate[index]
+                break
+                case 'ss':
+                    result.six = +userDate[index]
+                break
+                case 'ms':
+                    result.seven = +userDate[index]
+                break
+                default:
+                    this.#errors.push('.addDate: Is not a valid argument - ' + element)
+                break
 
-        text = text1.match(/[A-Za-z]{2}/g);
-        let t = text1.match(/Y{4}/)
-        del = text1.match(/[-+/:.,\s]/g)
-        let numb = text1.match(/\d+/g)
-        let index_year = -1
-        let index_fullYear = -1
-    
-        if(t == null){
-            index_year = text.indexOf('YY')
-        }else{
-            index_fullYear = text.indexOf('YY')
-        }
-        if (index_year !== -1) {
-            text[index_year] = one.getFullYear().toString().slice(2)
-        }
-        if (index_fullYear !== -1) {
-            text[index_fullYear] = one.getFullYear()
-            text.splice(index_fullYear + 1,1)
-        }
-        let index_day = text.indexOf('DD')
-        let index_mes = text.indexOf('MM')
-        if (index_day !== -1) {
-            text[index_day] = one.getDate();
-        }
-        if (index_mes !== -1) {
-            text[index_mes] = one.getMonth() + 1;
-        }
-        if(del != undefined){
-            for(let i = 0; i < 10;i++){
-                for(let i = 0; i < 10;i++){
-            if(del == null){
-                del = ''
             }
-            if(del[i] == undefined && del[i] != null){
-                del[i] = ''
-            }
-        }
-            }
-        }else{
-            del = ['', '', '', '', '', '', '', '', '']
-        }
-        if(numb == null){
-            numb = ['0','0','0','0','0','0']
-        }
-        for(let i = 0; i < 10;i++){
-            if(numb[i] == undefined){
-                numb[i] = '0'
-            }
-        }
-        let hours = text.indexOf('hh')
-        let minutes = text.indexOf('mm')
-        let seconds = text.indexOf('ss')
-        let mill_seconds = text.indexOf('Ms')
-        
-        if (mill_seconds !== -1) {
-            text[mill_seconds] = one.getMilliseconds()
-        }
-        if (hours !== -1) {
-            text[hours] = one.getHours();
-        }
-        if (minutes !== -1) {
-            text[minutes] = one.getMinutes();
-        }
-        if (seconds !== -1) {
-            text[seconds] = one.getSeconds();
-        }
-        if(text[0] < 10){
-            nullForDay = 0
-        }
-        if(text[1] < 10){
-            nullForMonth = 0
-        }
-        if(text[2] < 10){
-            nullForYear = 0
-        }
-        if(text[3] < 10){
-            nullForHours = 0
-        }
-        if(text[4] < 10){
-            nullForMint = 0
-        }
-        if(text[5] < 10){
-            nullForSec = 0
-        }
-        if (text.length == 7){
-            return `${nullForDay}${text[0] - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}${del[1]}${nullForYear}${text[2] - +numb[2]}${del[2]}${nullForHours}${text[3] - +numb[3]}${del[3]}${nullForMint}${text[4] - +numb[4]}${del[4]}${nullForSec}${text[5] - +numb[5]}${del[5]}${nullForSec}${text[6] - +numb[6]}`
-        }
-        if (text.length == 6){
-            return `${nullForDay}${text[0] - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}${del[1]}${nullForYear}${text[2] - +numb[2]}${del[2]}${nullForHours}${text[3] - +numb[3]}${del[3]}${nullForMint}${text[4] - +numb[4]}${del[4]}${nullForSec}${text[5] - +numb[5]}`//nullForSec
-        }
-        if (text.length == 5){
-            return `${nullForDay}${text[0] - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}${del[1]}${nullForYear}${text[2] - +numb[2]}${del[2]}${nullForHours}${text[3] - +numb[3]}${del[3]}${nullForMint}${text[4] - +numb[4]}`
-        }
-        if (text.length == 4){
-            return `${nullForDay}${text[0] - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}${del[1]}${nullForYear}${text[2] - +numb[2]}${del[2]}${nullForHours}${text[3] - +numb[3]}`
-        }
-        if (text.length == 3){
-            return `${nullForDay}${text[0] - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}${del[1]}${nullForYear}${text[2] - +numb[2]}`
-        }
-        if (text.length == 2){
-            return `${nullForDay}${text[0]  - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}`
-        }
-        if (text.length == 1){
-            return `${nullForDay}${text[0]  - +numb[0]}`
-        }
-
+        })
+        this.#date = Date.parse(result?.one, result?.two, result?.three, result?.four || 0, result?.five || 0, result?.six || 0, result?.seven || 0)
+        return this
     }
 
-        formatTimer(text, func = returnValueTrue){
-            text = text.split(':');
-            let hours_timer = +text[0]
-            let minutes_timer = +text[1]
-            let seconds_timer = +text[2]
-            let sumFullTimeMillis = (hours_timer * 60 * 60 * 1000) + (minutes_timer * 60 * 1000) + (seconds_timer * 1000)
-            return new Promise((resolve, reject)=>{
-                setTimeout(() => {
-                    resolve(func()) 
-                  }, sumFullTimeMillis);
-            })
-        }
+    /** 
+    *@param {'ru'|'en'} locales
+    *@returns {this}
+    */
+    locale(locales){
+        this.#locales = locales
+        return this
+    }
 
+    /**
+     * 
+     * @param {string|'DD.MM.YYYY'} format 
+     * @returns {string|Error}
+     */
+    format(format){
+        let formatDate = format.split(/\W/).filter(element => {return element.length > 0});
+        const formatSeparator = format.split(/\w/).filter(element => {return element.length > 0});
 
-    formatMillis(text1, lastDay){
-        let text
-        let del
-        let one = new Date(lastDay)
-        let nullForDay = ""
-        let nullForMonth = ""
-        let nullForYear = ""
-        let nullForHours = ""
-        let nullForMint = ""
-        let nullForSec = ""
+        formatDate = formatDate.map( element => {
+            switch(element){
+                case 'W':       return new Date(this.#date + this.#time).toLocaleString(this.#locales, { timeZone: this.#timeZone,    weekday: 'narrow'   })
+                case 'WW':      return new Date(this.#date + this.#time).toLocaleString(this.#locales, { timeZone: this.#timeZone,    weekday: 'short'    })
+                case 'WWW':     return new Date(this.#date + this.#time).toLocaleString(this.#locales, { timeZone: this.#timeZone,    weekday: 'long'     })
+                case 'YY':      return new Date(this.#date + this.#time).toLocaleString(this.#locales, { timeZone: this.#timeZone,    year: '2-digit'     })
+                case 'YYYY':    return new Date(this.#date + this.#time).toLocaleString(this.#locales, { timeZone: this.#timeZone,    year: 'numeric'     })
+                case 'MM':      return new Date(this.#date + this.#time).toLocaleString(this.#locales, { timeZone: this.#timeZone,    month: '2-digit'    })
+                case 'MMM':     return new Date(this.#date + this.#time).toLocaleString(this.#locales, { timeZone: this.#timeZone,    month: 'short'      })
+                case 'MMMM':    return new Date(this.#date + this.#time).toLocaleString(this.#locales, { timeZone: this.#timeZone,    month: 'long'       })
+                case 'DD':      return new Date(this.#date + this.#time).toLocaleString(this.#locales, { timeZone: this.#timeZone,    day: '2-digit'      })
+                case 'hh':      return new Date(this.#date + this.#time).toLocaleString(this.#locales, { timeZone: this.#timeZone,    hour: '2-digit'     })
+                case 'mm':      return new Date(this.#date + this.#time).toLocaleString(this.#locales, { timeZone: this.#timeZone,    minute: '2-digit'  })
+                case 'ss':      return new Date(this.#date + this.#time).toLocaleString(this.#locales, { timeZone: this.#timeZone,    second: '2-digit'  })
+                case 'ms':      return new Date(this.#date + this.#time).getMilliseconds()
+                default: this.#errors.push('.format: Is not a valid argument - ' + element)
 
-        text = text1.match(/[A-Za-z]{2}/g);
-        let t = text1.match(/Y{4}/)
-        del = text1.match(/[-+/:.,\s]/g)
-        let numb = text1.match(/\d+/g)
-        let index_year = -1
-        let index_fullYear = -1
-    
-        if(t == null){
-            index_year = text.indexOf('YY')
-        }else{
-            index_fullYear = text.indexOf('YY')
-        }
-        if (index_year !== -1) {
-            text[index_year] = one.getFullYear().toString().slice(2)
-        }
-        if (index_fullYear !== -1) {
-            text[index_fullYear] = one.getFullYear()
-            text.splice(index_fullYear + 1,1)
-        }
-        let index_day = text.indexOf('DD')
-        let index_mes = text.indexOf('MM')
-        if (index_day !== -1) {
-            text[index_day] = one.getDate();
-        }
-        if (index_mes !== -1) {
-            text[index_mes] = one.getMonth() + 1;
-        }
-        if(del == undefined){
-            del = ['','','','','','','']
-        }else{
-            for(let i = 0; i < 10;i++){
-                if(del[i] == undefined){
-                    del[i] = ''
-                }
             }
-        }
-        if(numb == null){
-            numb = ['0','0','0','0','0','0']
-        }
-        for(let i = 0; i < 10;i++){
-            if(numb[i] == undefined){
-                numb[i] = '0'
-            }
-        }
-        let hours = text.indexOf('hh')
-        let minutes = text.indexOf('mm')
-        let seconds = text.indexOf('ss')
-        let mill_seconds = text.indexOf('Ms')
-        
-        if (mill_seconds !== -1) {
-            text[mill_seconds] = one.getMilliseconds()
-        }
-        if (hours !== -1) {
-            text[hours] = one.getHours();
-        }
-        if (minutes !== -1) {
-            text[minutes] = one.getMinutes();
-        }
-        if (seconds !== -1) {
-            text[seconds] = one.getSeconds();
-        }
-        if(text[0] < 10){
-            nullForDay = 0
-        }
-        if(text[1] < 10){
-            nullForMonth = 0
-        }
-        if(text[2] < 10){
-            nullForYear = 0
-        }
-        if(text[3] < 10){
-            nullForHours = 0
-        }
-        if(text[4] < 10){
-            nullForMint = 0
-        }
-        if(text[5] < 10){
-            nullForSec = 0
-        }
-        if (text.length == 7){
-            return `${nullForDay}${text[0] - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}${del[1]}${nullForYear}${text[2] - +numb[2]}${del[2]}${nullForHours}${text[3] - +numb[3]}${del[3]}${nullForMint}${text[4] - +numb[4]}${del[4]}${nullForSec}${text[5] - +numb[5]}${del[5]}${nullForSec}${text[6] - +numb[6]}`
-        }
-        if (text.length == 6){
-            return `${nullForDay}${text[0] - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}${del[1]}${nullForYear}${text[2] - +numb[2]}${del[2]}${nullForHours}${text[3] - +numb[3]}${del[3]}${nullForMint}${text[4] - +numb[4]}${del[4]}${nullForSec}${text[5] - +numb[5]}`//nullForSec
-        }
-        if (text.length == 5){
-            return `${nullForDay}${text[0] - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}${del[1]}${nullForYear}${text[2] - +numb[2]}${del[2]}${nullForHours}${text[3] - +numb[3]}${del[3]}${nullForMint}${text[4] - +numb[4]}`
-        }
-        if (text.length == 4){
-            return `${nullForDay}${text[0] - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}${del[1]}${nullForYear}${text[2] - +numb[2]}${del[2]}${nullForHours}${text[3] - +numb[3]}`
-        }
-        if (text.length == 3){
-            return `${nullForDay}${text[0] - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}${del[1]}${nullForYear}${text[2] - +numb[2]}`
-        }
-        if (text.length == 2){
-            return `${nullForDay}${text[0]  - +numb[0]}${del[0]}${nullForMonth}${text[1] - +numb[1]}`
-        }
-        if (text.length == 1){
-            return `${nullForDay}${text[0]  - +numb[0]}`
+        })
+        formatDate = formatDate.map( (element, index) => {
+            return element + (formatSeparator[index] === undefined ? '' : formatSeparator[index])
+        })
+        return formatDate.join('')
+    }
+
+    /**
+     * @param {'UTC'|'Europe/Moscow'|'Europe/Kiev'|'Europe/Berlin'|'Asia/Shanghai'|'America/New_York'} time_zone
+     * @returns {this}
+     */
+    timeZone(time_zone){
+        this.#timeZone = time_zone
+        return this
+    }
+
+    /**
+     * 
+     * @param {number} time 
+     * @param {'weeks'|'days'|'hours'|'minutes'|'seconds'|'milliseconds'} keys 
+     * @returns 
+     */
+    subtract(time, keys){
+        switch(keys){
+            case 'weeks':
+                this.#time += time * 604800000
+                return this
+            case 'days':
+                this.#time += time * 86400000
+                return this
+            case 'hours':
+                this.#time += time * 3600000
+                return this
+            case 'minutes':
+                this.#time += time * 60000
+                return this
+            case 'seconds':
+                this.#time += time * 1000
+                return this
+            case 'milliseconds':
+                this.#time += time
+                return this
+            default:
+                return this
         }
     }
 
-    formatParse(string){
-        let y = new Date()
-        let r
-        let yearsForUser
-        //Вывод из произвольной даты читаемую в нужном формате (от стандартной, до миллисекунд)
-        let rTime = /0[0-9]{1}[:]0[0-9]{1}|[0-9]{2}[:][0-9]{2}/
-        let rDate = /0[0-9]{1}[.]0[0-9]{1}[.]0[0-9]{1}|[0-9]{2}[.][0-9]{2}[.][0-9]{2}|0[0-9]{1}[,]0[0-9]{1}[,]0[0-9]{1}|[0-9]{2}[,][0-9]{2}[,][0-9]{2}/
-        let rDays = /понедельник|вторник|среда|четверг|пятница|суббота|воскресенье/
-        let mouth = [31,28,31,30,31,30,31,31,30,31,30,31]
-
-        
-        if(rDays.test(string)){
-            return 'Смотришь день недели'
-        }
-        if(rTime.test(string)){
-            string = string.split(':');
-            let hours_timer = +string[0]
-            let minutes_timer = +string[1]
-            let seconds_timer = +string[2]
-            let sumFullTimeMillis = (hours_timer * 60 * 60 * 1000) + (minutes_timer * 60 * 1000) + (seconds_timer * 1000)
-            return sumFullTimeMillis
-        }
-
-
-        if(rDate.test(string)){
-            let dayFotMouth = 0
-            let _string = string.split('.'||',')
-            for (let i =0; i < _string[1] - 1;i++){
-            dayFotMouth = dayFotMouth + mouth[i]
-            }
-           let p = (+dayFotMouth + +_string[0]) * dayInMill
-
-           if(+_string[2] == +y.getFullYear().toString().slice(2)){
-            r = +_string[2] + 2000
-             yearsForUser = (r - 1970) * yearsInMill
-           }if(+_string[2] == +y.getFullYear().toString()){
-            yearsForUser = (+_string[2] - 1970) * yearsInMill
-           }
-            return yearsForUser + p + (dayInMill * 12) // Высокосные года. Нужно исправить, дабы обновлялось автоматически
-        }
-    }
-
-}
-
-
-function returnValueTrue(){
-    return true
 }
 
 
